@@ -44,6 +44,14 @@ function filterProducts(gender) {
     }
 }
 
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+        cartCountElement.textContent = cart.length > 0 ? `(${cart.length})` : '';
+    }
+}
+
 
 document.getElementById('filter-all').addEventListener('click', () => filterProducts('all'));
 document.getElementById('filter-male').addEventListener('click', () => filterProducts('Male'));
@@ -51,3 +59,4 @@ document.getElementById('filter-female').addEventListener('click', () => filterP
 
 
 fetchProducts();
+updateCartCount();

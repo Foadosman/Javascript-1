@@ -22,7 +22,6 @@ function displayProductDetails(product) {
     document.getElementById('product-description').textContent = product.description;
     document.getElementById('product-price').textContent = `price: ${product.discountedPrice || product.price} $`;
 
-
     const sizeSelect = document.getElementById('product-sizes');
     sizeSelect.innerHTML = '';
     product.sizes.forEach(size => {
@@ -32,7 +31,6 @@ function displayProductDetails(product) {
         sizeSelect.appendChild(option);
     });
 
-   
     document.getElementById('add-to-cart').addEventListener('click', () => {
         const selectedSize = sizeSelect.value;
         if (selectedSize) {
@@ -44,21 +42,26 @@ function displayProductDetails(product) {
 }
 
 function addToCart(product, selectedSize) {
-
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
 
     const productToAdd = { ...product, selectedSize};
 
-
     cart.push(productToAdd);
-
 
     localStorage.setItem('cart', JSON.stringify(cart));
 
-
     alert(`${product.title} in size ${selectedSize} has been added to the cart!`);
+
+
+    updateCartCount();
+}
+
+function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartCountElement = document.getElementById('cart-count');
+    cartCountElement.textContent = cart.length > 0 ? `(${cart.length})` : '';
 }
 
 
 fetchProductDetails();
+updateCartCount();
