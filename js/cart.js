@@ -38,8 +38,17 @@ function displayCart() {
             removeFromCart(index);
         });
     });
-}
 
+
+    const checkoutButton = document.getElementById('checkout-button');
+    if (cart.length === 0) {
+        checkoutButton.disabled = true;
+        checkoutButton.textContent = 'Cart is empty';
+    } else {
+        checkoutButton.disabled = flase;
+        checkoutButton = 'Complete order';
+    }
+}
 
 function removeFromCart(index) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -50,8 +59,13 @@ function removeFromCart(index) {
 
 
 document.getElementById('checkout-button').addEventListener('click', () => {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart.length > 0) {
     localStorage.removeItem('cart');
     window.location.href = 'confirmation/index.html';
+    } else {
+        alert('Your cart is empty. Please add itemsn before proceeding.');
+    }
 });
 
 displayCart();
